@@ -19,6 +19,29 @@ create table tbl_materia (
         unique index(id)
 );
 
+-- tabela conteudo -- 
+create table tbl_conteudo(
+		id int not null primary key auto_increment,
+        nome varchar(45) not null,
+        id_materia int not  null,
+        
+		#Cria um nome para representar a FK
+        constraint FK_materia_conteudo
+        
+        #Indica quem será o atributo desta tabela que será um FK
+        foreign key (id_materia)
+        
+        #Indica de onde virá a PK para virara a FK
+        references tbl_materia(id),
+        
+        unique index(id)
+);
+
+alter table tbl_conteudo
+	modify column nome varchar(100) not null;
+
+
+
 ------------  Inserts ------------------
 
 -- insert tbl_produtos --
@@ -162,9 +185,322 @@ insert into tbl_materia(
                         'Química'
                         );
 
+-- insert tbl_conteudo --
+insert into tbl_conteudo(
+                        nome,
+                        id_materia
+						)
+                        values
+                        (
+                        'Arte contemporânea',
+                        1
+                        ),
+                        (
+                        'Arte nos séculos XV e XVI',
+                        1
+                        ),
+                        (
+                        'Elementos básicos das artes plásticas',
+                        1
+                        ),
+                        (
+                        'Elementos básicos de música',
+                        1
+                        ),
+                        (
+                        'Música no século XX',
+                        1
+                        ),
+                        (
+                        'Vanguardas europeias',
+                        1
+                        ),
+                        (
+                        'Interpretação de poemas',
+                        1
+                        ),
+                        (
+                        'Sistema imunitário',
+                        2
+                        ),
+                        (
+                        'Ecossistema',
+                        2
+                        ),
+                        (
+                        'Fundamentos da ecologia',
+                        2
+                        ),
+                        (
+                        'DNA e RNA',
+                        2
+                        ),
+                        (
+                        'Genética',
+                        2
+                        ),
+                        (
+                        'Anatomia e fisiologia',
+                        2
+                        ),
+                        (
+                        'Vírus',
+                        2
+                        ),
+                        (
+                        'Esporte e espetáculo',
+                        3
+                        ),
+                        (
+                        'Influência da mídia no corpo',
+                        3
+                        ),
+                        (
+                        'Esportes adaptados',
+                        3
+                        ),
+                        (
+                        'Cuidados com a saúde',
+                        3
+                        ),
+                        (
+                        'Acústica',
+                        4
+                        ),
+                        (
+                        'Energia, trabalho e potência',
+                        4
+                        ),
+                        (
+                        'Resistores',
+                        4
+                        ),
+                        (
+                        'Calorimetria',
+                        4
+                        ),
+                        (
+                        'Impulso, quantidade de movimento e análise dimensional',
+                        4
+                        ),
+                        (
+                        'Cinemática',
+                        4
+                        ),
+                        (
+                        'Dinâmica',
+                        4
+                        ),
+                        (
+                        'Aristóteles e escola helenística',
+                        5
+                        ),
+                        (
+                        'Racionalismo moderno',
+                        5
+                        ),
+                        (
+                        'Escola sofista, Sócrates e Platão',
+                        5
+                        ),
+                        (
+                        'Filosofia contemporânea',
+                        5
+                        ),
+                        (
+                        'Escola de Frankfurt',
+                        5
+                        ),
+                        (
+                        'Papel do estado e relações de poder',
+                        5
+                        ),
+                        (
+                        'Capitalismo',
+                        5
+                        ),
+                        (
+                        'Erosão, sedimentação, desgaste do solo',
+                        6
+                        ),
+                        (
+                        'Fontes alternativas de energia',
+                        6
+                        ),
+                        (
+                        'Inovações tecnológicas no campo',
+                        6
+                        ),
+                        (
+                        'Problemas urbanos',
+                        6
+                        ),
+                        (
+                        'Impactos ambientais',
+                        6
+                        ),
+                        (
+                        'Produção agropecuária',
+                        6
+                        ),
+                        (
+                        'População economicamente ativa',
+                        6
+                        ),
+                        (
+                        'Brasil colonial',
+                        7
+                        ),
+                        (
+                        'Primeira república',
+                        7
+                        ),
+                        (
+                        '1° e 2° governo vargas',
+                        7
+                        ),
+                        (
+                        'Brasil oligárquico',
+                        7
+                        ),
+                        (
+                        'Ditadura civil militar no brasil',
+                        7
+                        ),
+                        (
+                        'Guerra fria',
+                        7
+                        ),
+                        (
+                        'Escravidão no Brasil império',
+                        7
+                        ),
+                        (
+                        'Utilizar a plataforma DUOLINGO',
+                        8
+                        ),
+                        (
+                        'Textualidade',
+                        9
+                        ),
+                        (
+                        'Tipos de texto',
+                        9
+                        ),
+                        (
+                        'Análise da pessoa, do espaço e do tempo',
+                        9
+                        ),
+                        (
+                        'Funções da linguagem',
+                        9
+                        ),
+                        (
+                        'Narratividade',
+                        9
+                        ),
+                        (
+                        'Textos informativos',
+                        9
+                        ),
+                        (
+                        'Textos jornalísticos',
+                        9
+                        ),
+                        (
+                        'Tendências contemporâneas',
+                        10
+                        ),
+                        (
+                        'Estrutura e formação das palavras',
+                        10
+                        ),
+                        (
+                        'Pontuação',
+                        10
+                        ),
+                        (
+                        'Classe de palavras',
+                        10
+                        ),
+                        (
+                        'Verbo',
+                        10
+                        ),
+                        (
+                        'Função e impacto de novas mídias',
+                        10
+                        ),
+                        (
+                        'Variação linguística',
+                        10
+                        ),
+                        (
+                        'Problemas de 1° e 2° graus',
+                        11
+                        ),
+                        (
+                        'Grandezas proporcionais e médias algébricas',
+                        11
+                        ),
+                        (
+                        'Porcentagem e matemática financeira',
+                        11
+                        ),
+                        (
+                        'Funções',
+                        11
+                        ),
+                        (
+                        'Noções básicas de estatística',
+                        11
+                        ),
+                        (
+                        'Gráficos e tabelas',
+                        11
+                        ),
+                        (
+                        'Geometria plana',
+                        11
+                        ),
+                        (
+                        'Ligações químicas, polaridade e forças',
+                        12
+                        ),
+                        (
+                        'Reações orgânicas',
+                        12
+                        ),
+                        (
+                        'Compostos orgânicos',
+                        12
+                        ),
+                        (
+                        'Eletroquímica',
+                        12
+                        ),
+                        (
+                        'Leis ponderais e estequiometria',
+                        12
+                        ),
+                        (
+                        'Química ambiental',
+                        12
+                        ),
+                        (
+                        'Soluções',
+                        12
+                        );
+
 --------------- Scripts -------------------
+-- script para buscar todos os produtos
 select * from tbl_produtos;
+-- script para buscar todas as materias
 select * from tbl_materia;
+-- script para buscar todos os conteudos 
+select * from tbl_conteudo;
+-- script para buscar o conteudo pela materia 
+select * from tbl_conteudo where id_materia = 2;
 
 
 

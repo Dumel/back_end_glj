@@ -36,19 +36,30 @@ const message = require('./controller/modulo/config.js')
 
 app.get('/v1/glj-corporation/produtos', cors(), async function(request, response) {
 
-    let dados = await controllerGlj.selecionarTodosProdutos()
+    let dados = await controllerGlj.selecionarTodosProdutos();
 
-    response.status(dados.status)
-    response.json(dados)
+    response.status(dados.status);
+    response.json(dados);
 
 })
 
 app.get('/v1/glj-corporation/materia', cors(), async function(request, response) {
 
-    let dados = await controllerGlj.selecionarTodasMateria()
+    let dados = await controllerGlj.selecionarTodasMateria();
 
-    response.status(dados.status)
-    response.json(dados)
+    response.status(dados.status);
+    response.json(dados);
+
+})
+
+app.get('/v1/glj-corporation/materia/conteudo/:idMateria', cors(), async function(request, response) {
+
+    let id = request.params.idMateria;
+
+    let dados = await controllerGlj.selecionarConteudoPelaMateria(id);
+
+    response.status(dados.status);
+    response.json(dados);
 
 })
 
