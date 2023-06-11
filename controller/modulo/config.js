@@ -14,8 +14,8 @@ const ERROR_INVALID_CONTENT_TYPE = { status: 415, message: 'O tipo de mídia Con
 
 /******************************************* Constantes de SUCESSO **************************************************/
 const CREATED_ITEM = { status: 201, message: 'Registro criado com sucesso.' }
-const UPDATED_ITEM = { status: 201, message: 'Registro atualizado com sucesso.' }
-const DELETED_ITEM = { status: 201, message: 'Registro deletado com sucesso.' }
+const UPDATED_ITEM = { status: 200, message: 'Registro atualizado com sucesso.' }
+const DELETED_ITEM = { status: 204, message: 'Registro deletado com sucesso.' }
 
 module.exports = {
 

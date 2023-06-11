@@ -9,9 +9,9 @@ var { PrismaClient } = require('@prisma/client')
 
 var prisma = new PrismaClient();
 
-const selectAllProdutos = async function() {
+const selectAllProdutos = async function () {
 
-    let sql = 'select * from tbl_produtos';
+    let sql = 'select * from tbl_produto';
 
     let rsProduto = await prisma.$queryRawUnsafe(sql);
 
