@@ -33,7 +33,7 @@ app.use((request, response, next) => {
 const controllerGlj = require('./controller/controllerGlj.js')
 const message = require('./controller/modulo/config.js')
 
-app.get('/v1/glj-corporation/produtos',  async function(request, response) {
+app.get('/v1/glj-corporation/produtos', async function(request, response) {
 
     let dados = await controllerGlj.selecionarTodosProdutos();
 
@@ -42,7 +42,7 @@ app.get('/v1/glj-corporation/produtos',  async function(request, response) {
 
 });
 
-app.get('/v1/glj-corporation/materia',  async function(request, response) {
+app.get('/v1/glj-corporation/materia', async function(request, response) {
 
     let dados = await controllerGlj.selecionarTodasMateria();
 
@@ -51,7 +51,7 @@ app.get('/v1/glj-corporation/materia',  async function(request, response) {
 
 });
 
-app.get('/v1/glj-corporation/materia/conteudo/:idMateria',  async function(request, response) {
+app.get('/v1/glj-corporation/materia/conteudo/:idMateria', async function(request, response) {
 
     let id = request.params.idMateria;
 
@@ -62,7 +62,7 @@ app.get('/v1/glj-corporation/materia/conteudo/:idMateria',  async function(reque
 
 });
 
-app.get('/v1/glj-corporation/tipoPremio', async function(request, response){
+app.get('/v1/glj-corporation/tipoPremio', async function(request, response) {
 
     let dados = await controllerGlj.selecionarTipoPremio();
 
@@ -70,49 +70,49 @@ app.get('/v1/glj-corporation/tipoPremio', async function(request, response){
     response.json(dados);
 });
 
-app.get('/v1/glj-corporation/tipoPremio/premio/:idTipoPremio', async function(request, response){
+app.get('/v1/glj-corporation/tipoPremio/premio/:idTipoPremio', async function(request, response) {
     let id = request.params.idTipoPremio;
 
     let dados = await controllerGlj.selecionarPremioPeloTipo(id);
 
     response.status(dados.status);
     response.json(dados);
-    
+
 });
 
-app.post('/v1/glj-corporation/escola', async function(request, response ){
+app.post('/v1/glj-corporation/escola', async function(request, response) {
 
     let contentType = request.headers['content-type'];
 
     if (String(contentType).toLowerCase() == 'application/json') {
 
-    let dadosBody = request.body;
+        let dadosBody = request.body;
 
-    let resultInsertDados = await controllerGlj.inserirEscola(dadosBody);
+        let resultInsertDados = await controllerGlj.inserirEscola(dadosBody);
 
-    response.status(resultInsertDados.status);
-    response.json(resultInsertDados)
+        response.status(resultInsertDados.status);
+        response.json(resultInsertDados)
     } else {
         response.status(message.ERROR_INVALID_CONTENT_TYPE.status);
         response.json(message.ERROR_INVALID_CONTENT_TYPE)
     }
 });
 
-app.post('/v1/glj-corporation/escola/login', async function(request, response ){
+app.post('/v1/glj-corporation/escola/login', async function(request, response) {
 
     let contentType = request.headers['content-type'];
 
     if (String(contentType).toLowerCase() == 'application/json') {
 
-    let dadosBody = request.body;
-    console.log(dadosBody);
-    let resultInsertDados = await controllerGlj.loginEscola(dadosBody);
-    if(resultInsertDados.length > 0){
-        resultInsertDados.status = 200;
-    }
+        let dadosBody = request.body;
+        console.log(dadosBody);
+        let resultInsertDados = await controllerGlj.loginEscola(dadosBody);
+        if (resultInsertDados.length > 0) {
+            resultInsertDados.status = 200;
+        }
 
-    response.status(resultInsertDados.status);
-    response.json(resultInsertDados)
+        response.status(resultInsertDados.status);
+        response.json(resultInsertDados)
     } else {
         response.status(message.ERROR_INVALID_CONTENT_TYPE.status);
         response.json(message.ERROR_INVALID_CONTENT_TYPE)
@@ -125,8 +125,8 @@ app.put('/v1/glj-corporation/escola/:id', async function(request, response) {
 
     let idEscola = request.params.id;
 
-    let resultUpdateDados = await controllerGlj.atualizarEscola(idEscola,dadosBody);
-    if(resultUpdateDados.length > 0){
+    let resultUpdateDados = await controllerGlj.atualizarEscola(idEscola, dadosBody);
+    if (resultUpdateDados.length > 0) {
         resultUpdateDados.status = 200;
     }
     response.status(resultUpdateDados.status);
@@ -134,7 +134,7 @@ app.put('/v1/glj-corporation/escola/:id', async function(request, response) {
 
 });
 
-app.delete('/v1/glj-corporation/escola/:id',  async function(request, response) {
+app.delete('/v1/glj-corporation/escola/:id', async function(request, response) {
 
     let idEscola = request.params.id;
 
@@ -165,6 +165,75 @@ app.get('/v1/glj-corporation/escola/:id', async function(request, response) {
     response.json(dados);
 
 });
+
+app.post('/v1/glj-corporation/funcionario', async function(request, response) {
+
+    let contentType = request.headers['content-type']
+
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let dadosBody = request.body
+
+        let resultInsertFuncionario = await controllerGlj.inserirFuncionario(dadosBody)
+
+        response.status(resultInsertFuncionario.status);
+        response.json(resultInsertFuncionario)
+
+    } else {
+
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
+app.get('/v1/glj-corporation/funcionario', async function(request, response) {
+    let dados = await controllerGlj.selecionarTodosFuncionarios()
+
+    response.status(dados.status)
+    response.json(dados)
+})
+
+
+
+app.get('/v1/glj-corporation/funcionario/:id', async function(request, response) {
+
+    let idFuncionario = request.params.id
+
+    let dados = await controllerGlj.selecionarFuncionarioPeloId(idFuncionario)
+
+    response.status(dados.status)
+    response.json(dados)
+})
+
+app.delete('/v1/glj-corporation/funcionario/:id', async function(request, response) {
+
+    let idFuncionario = request.params.id;
+
+    let resultDeleteDados = await controllerGlj.deletarFuncionario(idFuncionario)
+    console.log(resultDeleteDados);
+
+    // response.status(resultDeleteDados.status);
+    response.json(resultDeleteDados);
+
+});
+
+app.put('/v1/glj-corporation/funcionario/:id', async function(request, response) {
+
+    let dadosBody = request.body;
+
+    let idFuncionario = request.params.id;
+
+    let resultUpdateDados = await controllerGlj.atualizarFuncionario(idFuncionario, dadosBody);
+    if (resultUpdateDados.length > 0) {
+        resultUpdateDados.status = 200;
+    }
+    response.status(resultUpdateDados.status);
+    response.json(resultUpdateDados)
+
+});
+
+
+
+
 
 
 app.listen(8080, function() {

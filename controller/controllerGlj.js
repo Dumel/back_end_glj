@@ -12,6 +12,7 @@ const conteudoDAO = require('../model/DAO/conteudoDAO.js')
 const premioDAO = require('../model/DAO/premioDAO.js');
 const tipoPremioDAO = require('../model/DAO/tipoPremioDAO.js');
 const escolaDAO = require('../model/DAO/escolaDAO.js');
+const funcionarioDAO = require('../model/DAO/funcionarioDAO.js')
 
 
 const message = require('./modulo/config.js')
@@ -49,7 +50,7 @@ const selecionarTodasMateria = async function() {
     }
 };
 
-const selecionarConteudoPelaMateria = async function(idMateria){
+const selecionarConteudoPelaMateria = async function(idMateria) {
 
     if (idMateria == '' || idMateria == undefined || isNaN(idMateria))
         return message.ERROR_REQUIRED_ID
@@ -83,13 +84,13 @@ const selecionarTipoPremio = async function() {
         dadosJSON.count = dadosTipoPremio.length
         dadosJSON.tipoPremio = dadosTipoPremio
         return dadosJSON
-        }else{
-            return message.ERROR_NOT_FOUND
-        }
+    } else {
+        return message.ERROR_NOT_FOUND
+    }
 };
 
 const selecionarPremioPeloTipo = async function(idTipoPremio) {
-    if (idTipoPremio == '' || idTipoPremio  == undefined || isNaN(idTipoPremio ))
+    if (idTipoPremio == '' || idTipoPremio == undefined || isNaN(idTipoPremio))
         return message.ERROR_REQUIRED_ID
     else {
         // Solicita ao DAO todos os alunos do BD
@@ -112,7 +113,7 @@ const selecionarPremioPeloTipo = async function(idTipoPremio) {
 
 const selecionarTodasEscolas = async function() {
 
-    let dadosEscolas = await materiaDAO.selectAllMaterias()
+    let dadosEscolas = await escolaDAO.selectAllSchool()
 
     let dadosJson = {}
 
@@ -143,7 +144,7 @@ const selecionarEscolaPeloId = async function(idEscola) {
 };
 
 const deletarEscola = async function(idEscola) {
-    if(idEscola){
+    if (idEscola) {
         let dadosEscolas = await escolaDAO.deleteSchool(idEscola)
 
         if (dadosEscolas) {
@@ -151,13 +152,13 @@ const deletarEscola = async function(idEscola) {
         } else {
             return message.ERROR_NOT_FOUND
         }
-    }else{
+    } else {
         return message.ERROR_REQUIRED_ID
     }
 };
 
 const inserirEscola = async function(dados) {
-    
+
     let dadosEscolas = await escolaDAO.insertSchool(dados)
 
 
@@ -166,12 +167,12 @@ const inserirEscola = async function(dados) {
     } else {
         return message.ERROR_REQUIRED_DATA
     }
-    
+
 };
 
-const atualizarEscola = async function(idEscola,dados) {
-    
-    let dadosEscolas = await escolaDAO.updateSchool(idEscola,dados)
+const atualizarEscola = async function(idEscola, dados) {
+
+    let dadosEscolas = await escolaDAO.updateSchool(idEscola, dados)
 
     let dadosJson = {}
 
@@ -182,7 +183,7 @@ const atualizarEscola = async function(idEscola,dados) {
     } else {
         return message.ERROR_REQUIRED_DATA
     }
-    
+
 };
 
 const loginEscola = async function(dados) {
@@ -192,13 +193,80 @@ const loginEscola = async function(dados) {
     } else {
         return message.ERROR_INTERNAL_SERVER
     }
-    
+
 };
 
+const inserirFuncionario = async function(dadosFuncionario) {
 
+    let dadosFuncionarios = await funcionarioDAO.insertFuncionario(dadosFuncionario)
 
+    if (dadosFuncionarios) {
+        return message.CREATED_ITEM
+    } else {
+        return message.ERROR_REQUIRED_DATA
+    }
+}
 
+const selecionarTodosFuncionarios = async function() {
 
+    let dadosFuncionarios = await funcionarioDAO.selectAllFuncionario()
+
+    let dadosJson = {}
+
+    if (dadosFuncionarios) {
+        dadosJson.status = 200
+        dadosJson.count = dadosFuncionarios.length
+        dadosJson.funcionario = dadosFuncionarios
+        return dadosJson
+    } else {
+        return message.ERROR_NOT_FOUND
+    }
+}
+
+const selecionarFuncionarioPeloId = async function(idFuncionario) {
+    let dadosFuncionario = await funcionarioDAO.selectByIdFuncionario(idFuncionario)
+
+    let dadosJson = {}
+
+    if (dadosFuncionario) {
+        dadosJson.status = 200
+        dadosJson.count = dadosFuncionario.length
+        dadosJson.funcionario = dadosFuncionario
+        return dadosJson
+    } else {
+        return message.ERROR_NOT_FOUND
+    }
+}
+
+const deletarFuncionario = async function(idFuncionario) {
+    if (idFuncionario) {
+        let dadosFuncionarios = await funcionarioDAO.deleteFuncionario(idFuncionario)
+
+        if (dadosFuncionarios) {
+            return message.DELETED_ITEM
+        } else {
+            return message.ERROR_NOT_FOUND
+        }
+    } else {
+        return message.ERROR_REQUIRED_ID
+    }
+};
+
+const atualizarFuncionario = async function(idFuncionario, dados) {
+
+    let dadosFuncionarios = await funcionarioDAO.updateFuncionario(idFuncionario, dados)
+
+    let dadosJson = {}
+
+    if (dadosFuncionarios) {
+        dadosJson.status = 200
+        dadosJson.funcionario = dadosFuncionarios
+        return dadosJson
+    } else {
+        return message.ERROR_REQUIRED_DATA
+    }
+
+};
 
 
 
@@ -214,5 +282,10 @@ module.exports = {
     atualizarEscola,
     inserirEscola,
     deletarEscola,
-    loginEscola
+    loginEscola,
+    inserirFuncionario,
+    selecionarTodosFuncionarios,
+    selecionarFuncionarioPeloId,
+    deletarFuncionario,
+    atualizarFuncionario
 }
