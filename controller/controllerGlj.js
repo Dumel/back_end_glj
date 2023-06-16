@@ -129,6 +129,10 @@ const selecionarTodasEscolas = async function() {
 
 const selecionarEscolaPeloId = async function(idEscola) {
 
+    if (idEscola == '' || idEscola == undefined || isNaN(idEscola))
+        return message.ERROR_REQUIRED_ID
+    else{
+
     let dadosEscolas = await escolaDAO.selectSchoolById(idEscola)
 
     let dadosJson = {}
@@ -140,6 +144,8 @@ const selecionarEscolaPeloId = async function(idEscola) {
         return dadosJson
     } else {
         return message.ERROR_NOT_FOUND
+    }
+
     }
 };
 
@@ -157,21 +163,62 @@ const deletarEscola = async function(idEscola) {
     }
 };
 
-const inserirEscola = async function(dados) {
+const inserirEscola = async function(dadosEscolas) {
 
-    let dadosEscolas = await escolaDAO.insertSchool(dados)
+    let erro = {}
 
+    if (dadosEscolas.nome == '' || dadosEscolas.nome == undefined || dadosEscolas.nome.length > 100 ||
+        dadosEscolas.telefone == '' || dadosEscolas.telefone == undefined || dadosEscolas.telefone.length > 100 ||
+        dadosEscolas.email == '' || dadosEscolas.email == undefined || dadosEscolas.email.length > 100 ||
+        dadosEscolas.data_aplicacao == '' || dadosEscolas.data_aplicacao == undefined || dadosEscolas.data_aplicacao > 100 ||
+        dadosEscolas.pontuacao == '' || dadosEscolas.pontuacao == undefined || dadosEscolas.pontuacao.length > 250 ||
+        dadosEscolas.senha == '' || dadosEscolas.senha == undefined || dadosEscolas.senha.length > 250 
 
-    if (dadosEscolas) {
-        return message.CREATED_ITEM
-    } else {
+    ) {
+        
         return message.ERROR_REQUIRED_DATA
+        
+
+    } else {
+
+        //Envia os dados para a model a serem inseridos no BD
+        let status = await escolaDAO.insertSchool(dadosEscolas)
+
+        console.log(status);
+
+        if (status) {
+
+            let dadosJSON = {}
+
+            let escolaNovoId = await escolaDAO.selectLastId();
+            dadosEscolas.id = escolaNovoId;
+
+            dadosJSON.status = message.CREATED_ITEM.status
+            dadosJSON.escola = dadosEscolas
+
+            return dadosJSON
+
+        }else
+
+            return message.ERROR_INTERNAL_SERVER
+
     }
+    
+
+    // let dadosEscolas = await escolaDAO.insertSchool(dados)
+
+
+    // if (dadosEscolas) {
+    //     return message.CREATED_ITEM
+    // } else {
+    //     return message.ERROR_REQUIRED_DATA
+    // }
 
 };
 
 const atualizarEscola = async function(idEscola, dados) {
 
+    
     let dadosEscolas = await escolaDAO.updateSchool(idEscola, dados)
 
     let dadosJson = {}

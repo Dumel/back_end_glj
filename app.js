@@ -82,20 +82,46 @@ app.get('/v1/glj-corporation/tipoPremio/premio/:idTipoPremio', async function(re
 
 app.post('/v1/glj-corporation/escola', async function(request, response) {
 
-    let contentType = request.headers['content-type'];
+    let contentType = request.headers['content-type']
+    
+    if (String (contentType).toLowerCase() == 'application/json') {
+    
 
-    if (String(contentType).toLowerCase() == 'application/json') {
+    //Recebe os dados encaminhados no body da requisição
+    let dadosBody = request.body
 
-        let dadosBody = request.body;
+   
 
-        let resultInsertDados = await controllerGlj.inserirEscola(dadosBody);
+    let resultInsertDados = await controllerGlj.inserirEscola(dadosBody)
 
-        response.status(resultInsertDados.status);
-        response.json(resultInsertDados)
-    } else {
-        response.status(message.ERROR_INVALID_CONTENT_TYPE.status);
-        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    console.log(resultInsertDados);
+
+    //Retorna o status code e a message
+    response.status(resultInsertDados.status)
+    response.json(resultInsertDados)
+
+    }else{
+        response.status(message.ERROR_CONTENT_TYPE.status)
+        response.json(message.ERROR_CONTENT_TYPE)
     }
+
+
+
+
+    // let contentType = request.headers['content-type'];
+
+    // if (String(contentType).toLowerCase() == 'application/json') {
+
+    //     let dadosBody = request.body;
+
+    //     let resultInsertDados = await controllerGlj.inserirEscola(dadosBody);
+
+    //     response.status(resultInsertDados.status);
+    //     response.json(resultInsertDados)
+    // } else {
+    //     response.status(message.ERROR_INVALID_CONTENT_TYPE.status);
+    //     response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    // }
 });
 
 app.post('/v1/glj-corporation/escola/login', async function(request, response) {

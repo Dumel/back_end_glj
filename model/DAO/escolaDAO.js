@@ -3,15 +3,37 @@ var { PrismaClient } = require('@prisma/client')
 var prisma = new PrismaClient();
 
 const insertSchool = async function(dados){
-    let sql = `insert into tbl_escola (nome, telefone, email, data_aplicacao, hora_aplicacao, pontuacao, senha) values('${dados.nome}', '${dados.telefone}', '${dados.email}', '${dados.data_aplicacao}','${dados.hora_aplicacao}', '${dados.pontuacao}', '${dados.senha}')`
-    let rsEscolas = await prisma.$queryRawUnsafe(sql);
-    console.log(rsEscolas);
-    if (rsEscolas){
-        console.log("Entrou");
-        return rsEscolas;
-    }else{
-        return false;
-    }
+    let sql = `insert into tbl_escola (
+            nome,
+            telefone,
+            email,
+            data_aplicacao,
+            hora_aplicacao,
+            pontuacao,
+            senha)
+            
+            values
+            (   '${dados.nome}'
+                '${dados.telefone}',
+                '${dados.email}',
+                '${dados.data_aplicacao}',
+                '${dados.hora_aplicacao}',
+                '${dados.pontuacao}',
+                '${dados.senha}'
+            )`
+
+
+                console.log(sql);
+                //Executa o script SQL no BD e recebemos o retorno se deu certo ou não
+                let result = await prisma.$executeRawUnsafe(sql)
+            console.log(result);
+                if(result)
+                    return true
+            
+                else
+                    return false
+                
+
 }
 const selectAllSchool = async function () {
 
@@ -79,6 +101,19 @@ const updateSchool = async function (idEscola,dados) {
 
 
 
+const selectLastId = async function(){
+
+    //Script 
+    let sql = `select id from tbl_escola order by id desc limit 1`
+
+    let rsEscola = await prisma.$queryRawUnsafe(sql)
+
+    if(rsEscola.length > 0)
+        return rsEscola[0].id
+    else
+        return false
+}
+
 
 
 module.exports = {
@@ -87,5 +122,6 @@ module.exports = {
     deleteSchool,
     updateSchool,
     login,
-    insertSchool
+    insertSchool,
+    selectLastId
 }
